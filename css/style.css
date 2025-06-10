@@ -311,6 +311,7 @@ body {
   border-bottom: 1px solid var(--gray-light);
   margin-bottom: 15px;
   background-color: transparent;
+  color: var(--black); /* Add this line to ensure text color matches the theme */
 }
 
 .post-composer textarea::placeholder {
@@ -515,14 +516,18 @@ body {
   color: var(--white);
   font-weight: 600;
   z-index: 1001;
-  transform: translateX(100%);
+  transform: translateX(150%); /* Move it completely off-screen when not shown */
   transition: var(--transition);
   box-shadow: var(--shadow);
+  opacity: 0; /* Make it fully transparent when not shown */
+  visibility: hidden; /* Hide it completely when not shown */
 }
 
 .toast.show {
   transform: translateX(0);
   animation: slideInRight 0.3s ease;
+  opacity: 1;
+  visibility: visible;
 }
 
 .toast.success {
