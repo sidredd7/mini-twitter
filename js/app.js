@@ -125,6 +125,10 @@ class UI {
 
     setTimeout(() => {
       toast.classList.remove("show")
+      // Add a second timeout to ensure it's completely hidden after animation
+      setTimeout(() => {
+        toast.textContent = ""
+      }, 300)
     }, 3000)
   }
 
@@ -183,7 +187,7 @@ class ThemeManager {
   static updateThemeIcon(theme) {
     const themeIcon = document.querySelector(".theme-icon")
     if (themeIcon) {
-      themeIcon.textContent = theme === "light" ? "🌙" : "☀️"
+      themeIcon.textContent = theme === "light" ? "☾" : "☀"
     }
   }
 }
@@ -239,6 +243,14 @@ class MiniTwitter {
   }
 
   setupNavigationListeners() {
+    // Logo click to go back to feed
+    document.querySelectorAll(".auth-header h1, .header-content h1").forEach((logo) => {
+      logo.addEventListener("click", () => {
+        this.goToFeed()
+      })
+      logo.style.cursor = "pointer" // Add pointer cursor to indicate it's clickable
+    })
+
     document.getElementById("feed-btn").addEventListener("click", () => {
       UI.showSection("feed")
       this.loadFeed()
@@ -285,6 +297,18 @@ class MiniTwitter {
     })
   }
 
+  goToFeed() {
+    // If user is logged in, go to main screen feed
+    if (Storage.isLoggedIn()) {
+      UI.showScreen("main-screen")
+      UI.showSection("feed")
+      this.loadFeed()
+    } else {
+      // If not logged in, go to auth screen
+      UI.showScreen("auth-screen")
+    }
+  }
+
   switchAuthTab(tab) {
     document.querySelectorAll(".tab-button").forEach((btn) => {
       btn.classList.remove("active")
@@ -316,7 +340,7 @@ class MiniTwitter {
       Storage.setUser(response.user)
 
       this.showMainScreen()
-      UI.showToast("Bem-vindo de volta! 🎉", "success")
+      UI.showToast("Bem-vindo de volta!", "success")
     } catch (error) {
       UI.showError("auth-error", error.message)
     } finally {
@@ -343,7 +367,7 @@ class MiniTwitter {
       Storage.setUser(response.user)
 
       this.showMainScreen()
-      UI.showToast("Conta criada! Bem-vindo ao Mini Twitter! 🚀", "success")
+      UI.showToast("Conta criada! Bem-vindo ao Mini Twitter!", "success")
     } catch (error) {
       UI.showError("auth-error", error.message)
     } finally {
@@ -355,7 +379,7 @@ class MiniTwitter {
   handleLogout() {
     Storage.clear()
     UI.showScreen("auth-screen")
-    UI.showToast("Até logo! Volte sempre! 👋", "success")
+    UI.showToast("Até logo! Volte sempre!", "success")
 
     document.getElementById("login-form").reset()
     document.getElementById("register-form").reset()
@@ -385,7 +409,7 @@ class MiniTwitter {
     const submitBtn = event.target.querySelector('button[type="submit"]')
 
     if (!content) {
-      UI.showToast("Escreva algo interessante! ✍️", "error")
+      UI.showToast("Escreva algo interessante!", "error")
       return
     }
 
@@ -399,7 +423,7 @@ class MiniTwitter {
       this.updateCharCount("")
 
       await this.loadFeed()
-      UI.showToast("Post publicado! 📢", "success")
+      UI.showToast("Post publicado!", "success")
     } catch (error) {
       UI.showToast(error.message, "error")
     } finally {
@@ -417,14 +441,14 @@ class MiniTwitter {
       const posts = await API.getAllPosts()
 
       if (posts.length === 0) {
-        container.innerHTML = '<div class="loading">Seja o primeiro a postar! 🎯</div>'
+        container.innerHTML = '<div class="loading">Seja o primeiro a postar!</div>'
         return
       }
 
       container.innerHTML = posts.map((post) => this.createPostHTML(post)).join("")
       this.attachDeleteListeners()
     } catch (error) {
-      container.innerHTML = '<div class="loading">Ops! Erro ao carregar posts 😅</div>'
+      container.innerHTML = '<div class="loading">Ops! Erro ao carregar posts</div>'
       UI.showToast(error.message, "error")
     }
   }
@@ -438,14 +462,14 @@ class MiniTwitter {
       const posts = await API.getUserPosts()
 
       if (posts.length === 0) {
-        container.innerHTML = '<div class="loading">Você ainda não fez nenhum post 📝</div>'
+        container.innerHTML = '<div class="loading">Você ainda não fez nenhum post</div>'
         return
       }
 
       container.innerHTML = posts.map((post) => this.createPostHTML(post, true)).join("")
       this.attachDeleteListeners()
     } catch (error) {
-      container.innerHTML = '<div class="loading">Erro ao carregar posts 😔</div>'
+      container.innerHTML = '<div class="loading">Erro ao carregar posts</div>'
       UI.showToast(error.message, "error")
     }
   }
@@ -484,7 +508,7 @@ class MiniTwitter {
   }
 
   async handleDeletePost(postId) {
-    if (!confirm("Tem certeza que deseja deletar este post? 🗑️")) {
+    if (!confirm("Tem certeza que deseja deletar este post?")) {
       return
     }
 
@@ -492,7 +516,7 @@ class MiniTwitter {
       await API.deletePost(postId)
       await this.loadFeed()
       await this.loadUserPosts()
-      UI.showToast("Post deletado! 🗑️", "success")
+      UI.showToast("Post deletado!", "success")
     } catch (error) {
       UI.showToast(error.message, "error")
     }
@@ -539,7 +563,7 @@ class MiniTwitter {
     const submitBtn = event.target.querySelector('button[type="submit"]')
 
     if (!username || !email) {
-      UI.showToast("Preencha todos os campos! 📝", "error")
+      UI.showToast("Preencha todos os campos!", "error")
       return
     }
 
@@ -553,7 +577,7 @@ class MiniTwitter {
       this.displayProfile(response.user)
       this.hideEditModal()
 
-      UI.showToast("Perfil atualizado! ✨", "success")
+      UI.showToast("Perfil atualizado!", "success")
     } catch (error) {
       UI.showToast(error.message, "error")
     } finally {
