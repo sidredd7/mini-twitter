@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Twitter</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="auth-screen" class="screen active">
+        <div class="auth-container">
+            <div class="auth-header">
+                <h1>🐦 Mini Twitter</h1>
+                <p>Conecte-se com o mundo</p>
+            </div>
+            
+            <div class="auth-tabs">
+                <button id="login-tab" class="tab-button active">Entrar</button>
+                <button id="register-tab" class="tab-button">Cadastrar</button>
+            </div>
+
+            <form id="login-form" class="auth-form active">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Senha</label>
+                    <input type="password" id="login-password" required>
+                </div>
+                <button type="submit" class="btn-primary">Entrar</button>
+            </form>
+
+            <form id="register-form" class="auth-form">
+                <div class="form-group">
+                    <label for="register-username">Nome de usuário</label>
+                    <input type="text" id="register-username" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-email">Email</label>
+                    <input type="email" id="register-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Senha</label>
+                    <input type="password" id="register-password" required>
+                </div>
+                <button type="submit" class="btn-primary">Cadastrar</button>
+            </form>
+
+            <div id="auth-error" class="error-message"></div>
+        </div>
+    </div>
+
+    <div id="main-screen" class="screen">
+        <header class="main-header">
+            <div class="header-content">
+                <h1>🐦 Mini Twitter</h1>
+                <div class="header-actions">
+                    <button id="theme-toggle" class="theme-btn" title="Alternar tema">
+                        <span class="theme-icon">🌙</span>
+                    </button>
+                    <nav class="main-nav">
+                        <button id="feed-btn" class="nav-btn active">Feed</button>
+                        <button id="profile-btn" class="nav-btn">Perfil</button>
+                        <button id="logout-btn" class="nav-btn logout">Sair</button>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <section id="feed-section" class="content-section active">
+                <div class="post-composer">
+                    <form id="post-form">
+                        <textarea 
+                            id="post-content" 
+                            placeholder="O que está acontecendo?"
+                            maxlength="280"
+                            rows="3"
+                        ></textarea>
+                        <div class="composer-footer">
+                            <span id="char-count">280</span>
+                            <button type="submit" class="btn-primary" disabled>Tweetar</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="posts-container" class="posts-container">
+                    <div class="loading">Carregando posts...</div>
+                </div>
+            </section>
+
+            <section id="profile-section" class="content-section">
+                <div class="profile-header">
+                    <div class="profile-info">
+                        <h2 id="profile-username">Carregando...</h2>
+                        <p id="profile-email">Carregando...</p>
+                        <p id="profile-date">Membro desde: Carregando...</p>
+                    </div>
+                    <button id="edit-profile-btn" class="btn-secondary">Editar Perfil</button>
+                </div>
+
+                <div id="edit-profile-modal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3>Editar Perfil</h3>
+                            <button id="close-modal" class="close-btn">&times;</button>
+                        </div>
+                        <form id="edit-profile-form">
+                            <div class="form-group">
+                                <label for="edit-username">Nome de usuário</label>
+                                <input type="text" id="edit-username" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-email">Email</label>
+                                <input type="email" id="edit-email" required>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" id="cancel-edit" class="btn-secondary">Cancelar</button>
+                                <button type="submit" class="btn-primary">Salvar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="profile-posts">
+                    <h3>Meus Posts</h3>
+                    <div id="user-posts-container" class="posts-container">
+                        <div class="loading">Carregando seus posts...</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
