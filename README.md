@@ -1,204 +1,233 @@
 # 🐦 Mini Twitter
 
-Uma versão simplificada do Twitter desenvolvida com **HTML5**, **CSS3** e **JavaScript vanilla**. O projeto permite aos usuários criar contas, fazer posts, gerenciar perfis e interagir em um feed social.
-
+Uma versão simplificada do Twitter desenvolvida com **HTML5**, **CSS3** e **JavaScript vanilla**. O projeto permite aos usuários criar contas, fazer posts, gerenciar perfis e interagir em um feed social moderno e responsivo.
 
 ## ✨ Funcionalidades
 
 ### 🔐 Autenticação
-- **Cadastro de usuários** com validação de dados
-- **Login seguro** com JWT tokens
-- **Logout** com limpeza de sessão
-- **Persistência de login** após refresh da página
+- **Cadastro de usuários** com validação completa de dados
+- **Login seguro** com JWT tokens e criptografia
+- **Logout automático** com limpeza total de sessão
+- **Persistência inteligente** de login após refresh da página
+- **Validação em tempo real** de formulários
 
 ### 📝 Sistema de Posts
-- **Criar posts** com limite de 280 caracteres
-- **Contador de caracteres** em tempo real
-- **Feed público** com todos os posts
-- **Deletar posts próprios**
-- **Visualização de posts por usuário**
+- **Criar posts** com limite inteligente de 280 caracteres
+- **Contador dinâmico** de caracteres com alertas visuais
+- **Feed público** com todos os posts em tempo real
+- **Deletar posts próprios** com confirmação de segurança
+- **Visualização organizada** de posts por usuário
+- **Formatação automática** de datas e horários
 
 ### 👤 Perfil do Usuário
-- **Visualizar informações** do perfil
-- **Editar username e email**
-- **Data de cadastro** formatada
-- **Posts pessoais** organizados
+- **Visualizar informações** completas do perfil
+- **Editar username e email** com validação instantânea
+- **Data de cadastro** formatada e localizada
+- **Posts pessoais** organizados cronologicamente
+- **Modal responsivo** para edição de dados
 
-### 🎨 Interface
-- **Design responsivo** (mobile-first)
-- **Tema claro e escuro** alternáveis
-- **Notificações toast** para feedback
-- **Animações suaves** e transições
-- **Loading states** durante requisições
+### 🎨 Interface Moderna
+- **Design responsivo** com abordagem mobile-first
+- **Tema claro e escuro** com transições suaves
+- **Notificações toast** elegantes para feedback
+- **Animações CSS** fluidas e profissionais
+- **Loading states** informativos durante requisições
+- **Navegação intuitiva** entre seções
 
 ## 🚀 Como Usar
 
-### Pré-requisitos
-- Navegador web moderno
-- Conexão com internet (para API)
+### 📋 Pré-requisitos
+- Navegador web moderno (Chrome, Firefox, Safari, Edge)
+- Conexão estável com internet para comunicação com API
+- JavaScript habilitado no navegador
 
-### Instalação
-1. **Clone ou baixe** os arquivos do projeto
+### 💻 Instalação
+1. **Clone o repositório** ou baixe os arquivos do projeto
+   \`\`\`bash
+   git clone [URL-do-repositório]
+   cd mini-twitter
+   \`\`\`
+
 2. **Abra o arquivo** `index.html` no navegador
-3. **Ou use um servidor local** como Live Server (VS Code)
+   \`\`\`bash
+   # Opção 1: Abrir diretamente
+   open index.html
+   
+   # Opção 2: Usar servidor local (recomendado)
+   npx serve .
+   \`\`\`
 
-\`\`\`bash
-# Se usar um servidor local
-npx serve .
-# ou
-python -m http.server 8000
-\`\`\`
-
-### Primeiro Uso
+### 🎯 Primeiro Uso
 1. **Acesse a aplicação** no navegador
 2. **Cadastre uma conta** na aba "Cadastrar"
-3. **Faça login** com suas credenciais
-4. **Comece a tweetar!** 🎉
+3. **Preencha os dados** (username, email, senha)
+4. **Faça login** com suas credenciais
+5. **Comece a tweetar** e explore as funcionalidades!
 
 ## 🛠️ Tecnologias
 
-- **HTML5** - Estrutura semântica
-- **CSS3** - Estilização com Flexbox/Grid
-- **JavaScript ES6+** - Lógica da aplicação
-- **LocalStorage** - Persistência de dados
-- **Fetch API** - Comunicação com servidor
-- **CSS Variables** - Temas dinâmicos
+### Frontend
+- **HTML5** - Estrutura semântica e acessível
+- **CSS3** - Estilização moderna com Flexbox/Grid
+- **JavaScript ES6+** - Lógica da aplicação e interatividade
+- **CSS Variables** - Sistema de temas dinâmicos
+- **LocalStorage** - Persistência de dados no cliente
+
+### APIs e Comunicação
+- **Fetch API** - Comunicação assíncrona com servidor
+- **JWT Tokens** - Autenticação segura
+- **REST API** - Arquitetura de comunicação
+
+### Ferramentas de Desenvolvimento
+- **CSS Reset** - Normalização de estilos
+- **Mobile-First** - Design responsivo
+- **ES6 Modules** - Organização modular do código
 
 ## 📱 Responsividade
 
-O projeto foi desenvolvido com abordagem **mobile-first**:
+O projeto foi desenvolvido com abordagem **mobile-first** e suporta:
 
-- **Mobile**: < 480px
-- **Tablet**: 480px - 768px  
-- **Desktop**: > 768px
+- **📱 Mobile**: < 480px
+  - Layout em coluna única
+  - Navegação simplificada
+  - Botões otimizados para toque
 
-## 🌙 Temas
+- **📟 Tablet**: 480px - 768px
+  - Layout adaptado para telas médias
+  - Melhor aproveitamento do espaço
+  - Navegação híbrida
 
-A aplicação suporta dois temas:
+- **💻 Desktop**: > 768px
+  - Layout completo com sidebar
+  - Hover effects e transições
+  - Navegação completa
 
-- **🌞 Tema Claro** (padrão)
-- **🌙 Tema Escuro** (alternável)
+## 🌙 Sistema de Temas
 
-Use o botão de tema no cabeçalho para alternar entre eles.
+A aplicação suporta dois temas elegantes:
 
-## 🔗 API
+### ☀️ Tema Claro (Padrão)
+- Fundo branco e tons claros
+- Texto escuro para melhor legibilidade
+- Cores vibrantes para elementos interativos
 
-O projeto utiliza a API oficial do Mini Twitter:
+### 🌙 Tema Escuro
+- Fundo escuro e tons suaves
+- Texto claro para conforto visual
+- Cores ajustadas para modo noturno
+
+**Como alternar**: Use o botão de tema (🌙/☀️) no cabeçalho da aplicação.
+
+## 🔗 API Integration
+
+O projeto utiliza a API oficial do Mini Twitter hospedada no Render:
 
 **Base URL**: `https://mini-twitter-api-vy9q.onrender.com/api`
 
-### Endpoints Principais
-- `POST /auth/register` - Cadastro
-- `POST /auth/login` - Login
-- `GET /posts` - Listar posts
-- `POST /posts` - Criar post
-- `DELETE /posts/:id` - Deletar post
-- `GET /users/profile` - Perfil do usuário
-- `PUT /users/profile` - Atualizar perfil
+### 📡 Endpoints Principais
+
+#### Autenticação
+- `POST /auth/register` - Cadastro de novo usuário
+- `POST /auth/login` - Login de usuário existente
+
+#### Posts
+- `GET /posts` - Listar todos os posts
+- `POST /posts` - Criar novo post
+- `GET /posts/my-posts` - Listar posts do usuário logado
+- `DELETE /posts/:id` - Deletar post específico
+
+#### Usuário
+- `GET /users/profile` - Obter perfil do usuário
+- `PUT /users/profile` - Atualizar dados do perfil
+
+### 🔑 Autenticação
+Todas as requisições autenticadas incluem o header:
+\`\`\`javascript
+Authorization: Bearer <JWT_TOKEN>
+\`\`\`
 
 ## 📁 Estrutura do Projeto
 
 \`\`\`
 mini-twitter/
-├── index.html          # Página principal
-├── README.md           # Documentação
+├── index.html          # Página principal da aplicação
+├── README.md           # Documentação completa
 ├── css/
-│   ├── reset.css       # Reset de estilos
-│   └── style.css       # Estilos principais
+│   ├── reset.css       # Reset de estilos padrão
+│   └── style.css       # Estilos principais e temas
+├── design/
+│   ├── img1.png        # Screenshot app
+│   ├── img2.png        # Screenshot app
+│   ├── img3.png        # Screenshot app
+│   ├── img4.png        # Screenshot app
+│   ├── img5.png        # Screenshot app
+│   ├── img6.png        # Screenshot app
+│   ├── img7.png        # Screenshot app
+│   └── img8.png        # Screenshot app
 └── js/
-    └── app.js          # Lógica da aplicação
+    ├── app.js          # Lógica principal da aplicação
+    ├── controllers/
+    │   ├── auth.js     # Controlador de autenticação
+    │   ├── posts.js    # Controlador de posts
+    │   └── profile.js  # Controlador de perfil
+    ├── repositories/
+    │   ├── api.js      # Repositório da API
+    │   └── storage.js  # Repositório do localStorage
+    └── views/
+        └── ui.js       # Controlador de interface
 \`\`\`
 
 ## 🎯 Funcionalidades Detalhadas
 
-### Autenticação
-- Formulários com validação em tempo real
-- Tokens JWT armazenados com segurança
-- Verificação automática de sessão
-- Logout com limpeza completa de dados
+### 🔐 Sistema de Autenticação
+- **Formulários inteligentes** com validação em tempo real
+- **Tokens JWT** armazenados com segurança no localStorage
+- **Verificação automática** de sessão ao carregar a página
+- **Logout seguro** com limpeza completa de dados
+- **Feedback visual** para estados de loading e erro
 
-### Posts
-- Editor com contador de caracteres
-- Validação de conteúdo antes do envio
-- Formatação automática de datas
-- Escape de HTML para segurança
+### 📝 Gerenciamento de Posts
+- **Editor intuitivo** com contador de caracteres dinâmico
+- **Validação de conteúdo** antes do envio
+- **Formatação automática** de datas relativas (ex: "2h", "1 dia")
+- **Escape de HTML** para prevenir XSS
+- **Confirmação de exclusão** para evitar perdas acidentais
 
-### Perfil
-- Modal de edição responsivo
-- Validação de dados de perfil
-- Atualização em tempo real
-- Histórico de posts do usuário
+### 👤 Sistema de Perfil
+- **Modal responsivo** para edição de dados
+- **Validação em tempo real** de username e email
+- **Atualização instantânea** da interface após mudanças
+- **Histórico completo** de posts do usuário
+- **Informações de cadastro** formatadas
 
-### Interface
-- Navegação intuitiva entre seções
-- Estados de loading durante requisições
-- Notificações toast com auto-dismiss
-- Animações CSS suaves
+### 🎨 Interface e UX
+- **Navegação fluida** entre seções sem reload
+- **Estados de loading** informativos durante requisições
+- **Notificações toast** com auto-dismiss e cores temáticas
+- **Animações CSS** suaves para melhor experiência
+- **Feedback visual** para todas as interações
 
-## 🔧 Personalização
+## ⚙️ Personalização
 
-### Cores do Tema
-Edite as variáveis CSS em `style.css`:
+### 🎨 Customizar Cores do Tema
+Edite as variáveis CSS em `css/style.css`:
 
 \`\`\`css
 :root {
-  --primary-color: #1da1f2;
-  --background-color: #f7f9fa;
-  --text-color: #14171a;
+  --primary-color: #1da1f2;      /* Cor principal (azul Twitter) */
+  --primary-hover: #1991db;      /* Cor de hover */
+  --background-color: #f7f9fa;   /* Fundo da aplicação */
+  --white: #ffffff;              /* Cor dos cards */
+  --black: #14171a;              /* Cor do texto */
+  --secondary-color: #657786;    /* Cor secundária */
+  --error-color: #e0245e;        /* Cor de erro */
+  --success-color: #17bf63;      /* Cor de sucesso */
 }
 \`\`\`
 
-### Limite de Caracteres
-Altere o limite em `app.js`:
+### ✏️ Ajustar Limite de Caracteres
+Modifique o limite em `js/app.js`:
 
 \`\`\`javascript
-const maxChars = 280; // Altere aqui
+const maxChars = 280; // Altere para o valor desejado
 \`\`\`
-
-## 🐛 Solução de Problemas
-
-### Erro de CORS
-Se encontrar erros de CORS, use um servidor local:
-\`\`\`bash
-npx serve .
-\`\`\`
-
-### Posts não carregam
-Verifique sua conexão com internet e se a API está funcionando.
-
-### Login não persiste
-Verifique se o localStorage está habilitado no navegador.
-
-## 📈 Próximas Funcionalidades
-
-- [ ] Sistema de curtidas
-- [ ] Comentários em posts
-- [ ] Upload de imagens
-- [ ] Busca de posts
-- [ ] Seguir usuários
-- [ ] Notificações push
-
-## 🤝 Contribuição
-
-1. Faça um fork do projeto
-2. Crie uma branch para sua feature
-3. Commit suas mudanças
-4. Push para a branch
-5. Abra um Pull Request
-
-## 📄 Licença
-
-Este projeto é livre para uso educacional e pessoal.
-
-## 👨‍💻 Desenvolvedor
-
-Desenvolvido como projeto acadêmico para demonstrar habilidades em:
-- HTML5 semântico
-- CSS3 moderno
-- JavaScript vanilla
-- Design responsivo
-- Integração com APIs
-
----
-
-**🐦 Divirta-se tweetando!**
