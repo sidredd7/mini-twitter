@@ -2,7 +2,6 @@
 
 Uma versão simplificada do Twitter desenvolvida com **HTML5**, **CSS3** e **JavaScript vanilla**. O projeto permite aos usuários criar contas, fazer posts, gerenciar perfis e interagir em um feed social.
 
-![Mini Twitter Preview](https://via.placeholder.com/800x400/1da1f2/ffffff?text=Mini+Twitter)
 
 ## ✨ Funcionalidades
 
