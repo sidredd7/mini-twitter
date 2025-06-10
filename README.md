@@ -53,10 +53,6 @@ Uma versão simplificada do Twitter desenvolvida com **HTML5**, **CSS3** e **Jav
    # Opção 1: Abrir diretamente
    open index.html
    
-   # Opção 2: Usar servidor local (recomendado)
-   npx serve .
-   \`\`\`
-
 ### 🎯 Primeiro Uso
 1. **Acesse a aplicação** no navegador
 2. **Cadastre uma conta** na aba "Cadastrar"
