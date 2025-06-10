@@ -1,3 +1,9 @@
+// Importações necessárias
+import { apiRepository } from "../repositories/api_repository.js"
+import { StorageRepository } from "../repositories/storage_repository.js"
+import { postsController } from "./posts.js"
+import { UI } from "../utils/ui.js"
+
 // Controlador de Perfil
 class ProfileController {
   constructor() {
