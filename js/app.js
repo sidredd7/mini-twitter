@@ -1,43 +1,54 @@
 const API_BASE_URL = "https://mini-twitter-api-vy9q.onrender.com/api"
 
+// Classe para manipular o armazenamento local (localStorage)
 class Storage {
+  // Armazena o token de autenticação
   static setToken(token) {
     localStorage.setItem("mini_twitter_token", token)
   }
 
+  // Recupera o token de autenticação
   static getToken() {
     return localStorage.getItem("mini_twitter_token")
   }
 
+  // Armazena os dados do usuário
   static setUser(user) {
     localStorage.setItem("mini_twitter_user", JSON.stringify(user))
   }
 
+  // Recupera os dados do usuário
   static getUser() {
     const user = localStorage.getItem("mini_twitter_user")
     return user ? JSON.parse(user) : null
   }
 
+  // Define e aplica o tema (claro ou escuro)
   static setTheme(theme) {
     localStorage.setItem("mini_twitter_theme", theme)
     document.documentElement.setAttribute("data-theme", theme)
   }
 
+  // Recupera o tema atual, padrão é "light"
   static getTheme() {
     return localStorage.getItem("mini_twitter_theme") || "light"
   }
 
+  // Remove token e usuário do localStorage (logout)
   static clear() {
     localStorage.removeItem("mini_twitter_token")
     localStorage.removeItem("mini_twitter_user")
   }
 
+  // Verifica se o usuário está logado
   static isLoggedIn() {
     return !!(this.getToken() && this.getUser())
   }
 }
 
+// Classe responsável por fazer requisições à API
 class API {
+  // Função genérica para fazer requisições à API
   static async request(endpoint, options = {}) {
     const url = `${API_BASE_URL}${endpoint}`
     const token = Storage.getToken()
@@ -50,6 +61,7 @@ class API {
       ...options,
     }
 
+    // Adiciona token de autenticação no cabeçalho se existir
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
     }
@@ -58,6 +70,7 @@ class API {
       const response = await fetch(url, config)
       const data = await response.json()
 
+      // Verifica se houve erro na resposta
       if (!response.ok) {
         throw new Error(data.message || `Erro ${response.status}`)
       }
@@ -69,6 +82,7 @@ class API {
     }
   }
 
+  // Realiza o login do usuário
   static async login(email, password) {
     return await this.request("/auth/login", {
       method: "POST",
@@ -76,6 +90,7 @@ class API {
     })
   }
 
+  // Registra novo usuário
   static async register(username, email, password) {
     return await this.request("/auth/register", {
       method: "POST",
@@ -83,6 +98,7 @@ class API {
     })
   }
 
+  // Cria um novo post
   static async createPost(content) {
     return await this.request("/posts", {
       method: "POST",
@@ -90,24 +106,29 @@ class API {
     })
   }
 
+  // Busca todos os posts do feed
   static async getAllPosts() {
     return await this.request("/posts")
   }
 
+  // Busca apenas os posts do usuário logado
   static async getUserPosts() {
     return await this.request("/posts/my-posts")
   }
 
+  // Deleta um post pelo ID
   static async deletePost(postId) {
     return await this.request(`/posts/${postId}`, {
       method: "DELETE",
     })
   }
 
+  // Busca o perfil do usuário
   static async getProfile() {
     return await this.request("/users/profile")
   }
 
+  // Atualiza o perfil do usuário
   static async updateProfile(username, email) {
     return await this.request("/users/profile", {
       method: "PUT",
@@ -116,7 +137,9 @@ class API {
   }
 }
 
+// Classe de utilidades para a interface do usuário (UI)
 class UI {
+  // Exibe uma notificação (toast) na tela
   static showToast(message, type = "success") {
     const toast = document.getElementById("toast")
     toast.textContent = message
@@ -125,13 +148,13 @@ class UI {
 
     setTimeout(() => {
       toast.classList.remove("show")
-      // Add a second timeout to ensure it's completely hidden after animation
       setTimeout(() => {
         toast.textContent = ""
       }, 300)
     }, 3000)
   }
 
+  // Exibe mensagem de erro em um elemento específico
   static showError(elementId, message) {
     const errorElement = document.getElementById(elementId)
     if (errorElement) {
@@ -139,6 +162,7 @@ class UI {
     }
   }
 
+  // Limpa mensagens de erro de um elemento
   static clearError(elementId) {
     const errorElement = document.getElementById(elementId)
     if (errorElement) {
@@ -146,6 +170,7 @@ class UI {
     }
   }
 
+  // Exibe uma tela específica da aplicação (auth ou main)
   static showScreen(screenId) {
     document.querySelectorAll(".screen").forEach((screen) => {
       screen.classList.remove("active")
@@ -153,6 +178,7 @@ class UI {
     document.getElementById(screenId).classList.add("active")
   }
 
+  // Alterna entre seções do conteúdo principal (feed ou perfil)
   static showSection(sectionId) {
     document.querySelectorAll(".nav-btn").forEach((btn) => {
       btn.classList.remove("active")
@@ -166,13 +192,16 @@ class UI {
   }
 }
 
+// Classe para controle de tema (claro/escuro)
 class ThemeManager {
+  // Inicializa o tema salvo
   static init() {
     const savedTheme = Storage.getTheme()
     this.setTheme(savedTheme)
     this.updateThemeIcon(savedTheme)
   }
 
+  // Alterna entre os temas
   static toggle() {
     const currentTheme = Storage.getTheme()
     const newTheme = currentTheme === "light" ? "dark" : "light"
@@ -180,10 +209,12 @@ class ThemeManager {
     this.updateThemeIcon(newTheme)
   }
 
+  // Define o tema
   static setTheme(theme) {
     Storage.setTheme(theme)
   }
 
+  // Atualiza o ícone do tema
   static updateThemeIcon(theme) {
     const themeIcon = document.querySelector(".theme-icon")
     if (themeIcon) {
@@ -191,26 +222,29 @@ class ThemeManager {
     }
   }
 }
-
+// Classe principal que gerencia toda a aplicação
 class MiniTwitter {
   constructor() {
     this.init()
   }
 
+  // Inicializa a aplicação
   init() {
-    ThemeManager.init()
-    this.setupEventListeners()
-    this.checkAuthStatus()
+    ThemeManager.init() // Carrega o tema salvo
+    this.setupEventListeners() // Configura todos os eventos
+    this.checkAuthStatus() // Verifica se o usuário está logado
   }
 
+  // Configura os eventos da interface
   setupEventListeners() {
-    this.setupAuthListeners()
-    this.setupNavigationListeners()
-    this.setupPostListeners()
-    this.setupProfileListeners()
-    this.setupThemeListener()
+    this.setupAuthListeners()       // Eventos de autenticação (login, cadastro)
+    this.setupNavigationListeners() // Navegação entre telas
+    this.setupPostListeners()       // Eventos relacionados a posts
+    this.setupProfileListeners()    // Eventos do perfil do usuário
+    this.setupThemeListener()       // Botão de alternar tema
   }
 
+  // Evento para alternar entre tema claro e escuro
   setupThemeListener() {
     const themeToggle = document.getElementById("theme-toggle")
     if (themeToggle) {
@@ -220,6 +254,7 @@ class MiniTwitter {
     }
   }
 
+  // Configura os eventos da parte de autenticação
   setupAuthListeners() {
     document.getElementById("login-tab").addEventListener("click", () => {
       this.switchAuthTab("login")
@@ -242,13 +277,14 @@ class MiniTwitter {
     })
   }
 
+  // Configura os eventos de navegação entre seções (feed e perfil)
   setupNavigationListeners() {
-    // Logo click to go back to feed
+    // Clicando no logo volta para o feed
     document.querySelectorAll(".auth-header h1, .header-content h1").forEach((logo) => {
       logo.addEventListener("click", () => {
         this.goToFeed()
       })
-      logo.style.cursor = "pointer" // Add pointer cursor to indicate it's clickable
+      logo.style.cursor = "pointer"
     })
 
     document.getElementById("feed-btn").addEventListener("click", () => {
@@ -263,6 +299,7 @@ class MiniTwitter {
     })
   }
 
+  // Configura os eventos do formulário de criação de post
   setupPostListeners() {
     document.getElementById("post-form").addEventListener("submit", (e) => {
       this.handleCreatePost(e)
@@ -273,6 +310,7 @@ class MiniTwitter {
     })
   }
 
+  // Configura os eventos da edição de perfil
   setupProfileListeners() {
     document.getElementById("edit-profile-btn").addEventListener("click", () => {
       this.showEditModal()
@@ -290,6 +328,7 @@ class MiniTwitter {
       this.handleUpdateProfile(e)
     })
 
+    // Fecha o modal se o usuário clicar fora do conteúdo
     document.getElementById("edit-profile-modal").addEventListener("click", (e) => {
       if (e.target.id === "edit-profile-modal") {
         this.hideEditModal()
@@ -297,18 +336,18 @@ class MiniTwitter {
     })
   }
 
+  // Navega para o feed ou para tela de login/cadastro, dependendo se o usuário está logado
   goToFeed() {
-    // If user is logged in, go to main screen feed
     if (Storage.isLoggedIn()) {
       UI.showScreen("main-screen")
       UI.showSection("feed")
       this.loadFeed()
     } else {
-      // If not logged in, go to auth screen
       UI.showScreen("auth-screen")
     }
   }
 
+  // Alterna entre as abas de login e cadastro
   switchAuthTab(tab) {
     document.querySelectorAll(".tab-button").forEach((btn) => {
       btn.classList.remove("active")
@@ -323,6 +362,7 @@ class MiniTwitter {
     UI.clearError("auth-error")
   }
 
+  // Processa o login
   async handleLogin(event) {
     event.preventDefault()
 
@@ -349,6 +389,7 @@ class MiniTwitter {
     }
   }
 
+  // Processa o cadastro
   async handleRegister(event) {
     event.preventDefault()
 
@@ -376,6 +417,7 @@ class MiniTwitter {
     }
   }
 
+  // Processa o logout
   handleLogout() {
     Storage.clear()
     UI.showScreen("auth-screen")
@@ -385,6 +427,7 @@ class MiniTwitter {
     document.getElementById("register-form").reset()
   }
 
+  // Atualiza o contador de caracteres do post
   updateCharCount(content) {
     const maxChars = 280
     const remaining = maxChars - content.length
@@ -401,7 +444,7 @@ class MiniTwitter {
 
     submitBtn.disabled = content.trim().length === 0 || remaining < 0
   }
-
+  // Cria e publica um novo post
   async handleCreatePost(event) {
     event.preventDefault()
 
@@ -417,12 +460,12 @@ class MiniTwitter {
       submitBtn.disabled = true
       submitBtn.textContent = "Postando..."
 
-      await API.createPost(content)
+      await API.createPost(content) // Envia post para a API
 
       document.getElementById("post-content").value = ""
-      this.updateCharCount("")
+      this.updateCharCount("") // Reseta contador
 
-      await this.loadFeed()
+      await this.loadFeed() // Recarrega feed
       UI.showToast("Post publicado!", "success")
     } catch (error) {
       UI.showToast(error.message, "error")
@@ -432,6 +475,7 @@ class MiniTwitter {
     }
   }
 
+  // Carrega todos os posts do feed
   async loadFeed() {
     const container = document.getElementById("posts-container")
 
@@ -445,14 +489,16 @@ class MiniTwitter {
         return
       }
 
+      // Renderiza todos os posts no container
       container.innerHTML = posts.map((post) => this.createPostHTML(post)).join("")
-      this.attachDeleteListeners()
+      this.attachDeleteListeners() // Ativa botões de deletar
     } catch (error) {
       container.innerHTML = '<div class="loading">Ops! Erro ao carregar posts</div>'
       UI.showToast(error.message, "error")
     }
   }
 
+  // Carrega os posts do usuário logado
   async loadUserPosts() {
     const container = document.getElementById("user-posts-container")
 
@@ -474,6 +520,7 @@ class MiniTwitter {
     }
   }
 
+  // Cria o HTML de um post
   createPostHTML(post, showDeleteBtn = false) {
     const currentUser = Storage.getUser()
     const canDelete = showDeleteBtn || (currentUser && post.author._id === currentUser.id)
@@ -498,6 +545,7 @@ class MiniTwitter {
     `
   }
 
+  // Ativa os botões de deletar posts
   attachDeleteListeners() {
     document.querySelectorAll(".delete-btn").forEach((btn) => {
       btn.addEventListener("click", (e) => {
@@ -507,6 +555,7 @@ class MiniTwitter {
     })
   }
 
+  // Deleta um post após confirmação
   async handleDeletePost(postId) {
     if (!confirm("Tem certeza que deseja deletar este post?")) {
       return
@@ -522,6 +571,7 @@ class MiniTwitter {
     }
   }
 
+  // Carrega e exibe os dados do perfil do usuário
   async loadProfile() {
     try {
       const profile = await API.getProfile()
@@ -531,6 +581,7 @@ class MiniTwitter {
     }
   }
 
+  // Exibe as informações do perfil na interface
   displayProfile(profile) {
     document.getElementById("profile-username").textContent = `@${profile.username}`
     document.getElementById("profile-email").textContent = profile.email
@@ -543,6 +594,7 @@ class MiniTwitter {
     document.getElementById("profile-date").textContent = `Membro desde: ${joinDate}`
   }
 
+  // Abre o modal para editar perfil
   showEditModal() {
     const user = Storage.getUser()
     document.getElementById("edit-username").value = user.username
@@ -550,11 +602,13 @@ class MiniTwitter {
     document.getElementById("edit-profile-modal").classList.add("active")
   }
 
+  // Fecha o modal de edição
   hideEditModal() {
     document.getElementById("edit-profile-modal").classList.remove("active")
     document.getElementById("edit-profile-form").reset()
   }
 
+  // Atualiza os dados do perfil
   async handleUpdateProfile(event) {
     event.preventDefault()
 
@@ -586,12 +640,14 @@ class MiniTwitter {
     }
   }
 
+  // Mostra a tela principal (feed) após login/cadastro
   showMainScreen() {
     UI.showScreen("main-screen")
     UI.showSection("feed")
     this.loadFeed()
   }
 
+  // Verifica se o usuário está logado e redireciona para a tela correta
   checkAuthStatus() {
     if (Storage.isLoggedIn()) {
       this.showMainScreen()
@@ -600,6 +656,7 @@ class MiniTwitter {
     }
   }
 
+  // Formata a data do post para exibir de forma legível
   formatDate(dateString) {
     const date = new Date(dateString)
     const now = new Date()
@@ -616,6 +673,7 @@ class MiniTwitter {
     })
   }
 
+  // Escapa HTML para evitar scripts maliciosos
   escapeHtml(text) {
     const div = document.createElement("div")
     div.textContent = text
@@ -623,6 +681,7 @@ class MiniTwitter {
   }
 }
 
+// Inicializa o app assim que a página carregar
 document.addEventListener("DOMContentLoaded", () => {
   new MiniTwitter()
 })
