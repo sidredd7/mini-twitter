@@ -120,7 +120,7 @@ class UI {
   static showToast(message, type = "success") {
     const toast = document.getElementById("toast")
 
-    // Add icon based on type
+    // Icone variavel
     let iconSvg = ""
     if (type === "success") {
       iconSvg =
@@ -136,7 +136,7 @@ class UI {
 
     setTimeout(() => {
       toast.classList.remove("show")
-      // Add a second timeout to ensure it's completely hidden after animation
+      // Confirmar ocultacao da animacao
       setTimeout(() => {
         toast.innerHTML = ""
       }, 300)
@@ -245,12 +245,12 @@ class MiniTwitter {
   }
 
   setupNavigationListeners() {
-    // Logo click to go back to feed
+    // Logo volta ao inicio
     document.querySelectorAll(".auth-header h1, .header-content h1").forEach((logo) => {
       logo.addEventListener("click", () => {
         this.goToFeed()
       })
-      logo.style.cursor = "pointer" // Add pointer cursor to indicate it's clickable
+      logo.style.cursor = "pointer" // Indicar que e clicavel
     })
 
     document.getElementById("feed-btn").addEventListener("click", () => {
@@ -300,13 +300,13 @@ class MiniTwitter {
   }
 
   goToFeed() {
-    // If user is logged in, go to main screen feed
+    // Se estiver logado ir para o feed
     if (Storage.isLoggedIn()) {
       UI.showScreen("main-screen")
       UI.showSection("feed")
       this.loadFeed()
     } else {
-      // If not logged in, go to auth screen
+      // Se não, ira para a tela de autenticacao
       UI.showScreen("auth-screen")
     }
   }
