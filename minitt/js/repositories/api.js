@@ -1,7 +1,7 @@
 // Configuração da API
 const API_BASE_URL = "https://mini-twitter-api-vy9q.onrender.com/api"
 
-// Import StorageRepository
+// Importar StorageRepository
 import { StorageRepository } from "../storage/storage.js"
 
 class ApiRepository {
